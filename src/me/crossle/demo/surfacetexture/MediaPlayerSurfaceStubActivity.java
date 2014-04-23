@@ -1,45 +1,53 @@
 package me.crossle.demo.surfacetexture;
 
 import android.app.Activity;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.Resources;
+import android.content.Context;
 import android.media.MediaPlayer;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.util.Log;
 
-public class MediaPlayerSurfaceStubActivity extends Activity {
 
-	private static final String TAG = "MediaPlayerSurfaceStubActivity";
-
-	protected Resources mResources;
-
-	private VideoSurfaceView mVideoView = null;
-	private MediaPlayer mMediaPlayer = null;
-
+public class MediaPlayerSurfaceStubActivity extends Activity
+{
+	private static final String TAG = MediaPlayerSurfaceStubActivity.class.getSimpleName();
+	
+	private GLSurfaceView mGLSurfaceView;
+	
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
-
-		mResources = getResources();
-		mMediaPlayer = new MediaPlayer();
-
-		try {
-			AssetFileDescriptor afd = mResources.openRawResourceFd(R.raw.testvideo);
-			mMediaPlayer.setDataSource(
-			        afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-			afd.close();
-		} catch (Exception e) {
-			Log.e(TAG, e.getMessage(), e);
+		
+		App app = App.from(this);
+		mGLSurfaceView = new GLSurfaceView(this);
+		mGLSurfaceView.setEGLContextFactory(app.getEGLContextFactory());
+		mGLSurfaceView.setEGLContextClientVersion(2);
+		//mGLSurfaceView.setPreserveEGLContextOnPause(true);
+		mGLSurfaceView.setRenderer(app.getMediaPlayerRenderer());
+		mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+		
+		MediaPlayer mp = app.getMediaPlayer();
+		if(!mp.isPlaying()){
+			mp.start();
 		}
-
-		mVideoView = new VideoSurfaceView(this, mMediaPlayer);
-		setContentView(mVideoView);
-
+		
+		setContentView(mGLSurfaceView);
 	}
-
+	
+	/*
 	@Override
-	protected void onResume() {
-		super.onResume();
-		mVideoView.onResume();
+	protected void onPause()
+	{
+		super.onPause();
+		mGLSurfaceView.onPause();
 	}
+	
+	@Override
+	protected void onResume()
+	{
+		mGLSurfaceView.onResume();
+		super.onResume();
+	}
+	*/
 }
