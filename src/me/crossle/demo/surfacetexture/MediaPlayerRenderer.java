@@ -12,7 +12,6 @@ import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 import android.view.Surface;
@@ -79,11 +78,11 @@ class MediaPlayerRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFr
 	public void onDrawFrame(GL10 glUnused)
 	{
 		synchronized (this){
-			if(updateSurface){
+//			if(updateSurface){
 				mSurface.updateTexImage();
 				mSurface.getTransformMatrix(mSTMatrix);
 				updateSurface = false;
-			}
+//			}
 		}
 		
 		GLES20.glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
@@ -128,6 +127,7 @@ class MediaPlayerRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFr
 	@Override
 	public void onSurfaceCreated(GL10 glUnused, EGLConfig config)
 	{
+		Log.e(TAG, "Surface created");
 		mProgram = createProgram(mVertexShader, mFragmentShader);
 		if(mProgram == 0){
 			return;
@@ -190,6 +190,7 @@ class MediaPlayerRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFr
 	
 	synchronized public void onFrameAvailable(SurfaceTexture surface)
 	{
+		Log.w(TAG, "Frame avail");
 		updateSurface = true;
 	}
 	

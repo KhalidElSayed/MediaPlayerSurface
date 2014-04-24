@@ -5,12 +5,12 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 
+import me.crossle.demo.surfacetexture.GLSurfaceView.EGLContextFactory;
+import me.crossle.demo.surfacetexture.GLSurfaceView.Renderer;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.opengl.GLSurfaceView.EGLContextFactory;
-import android.opengl.GLSurfaceView.Renderer;
 import android.util.Log;
 
 
@@ -52,9 +52,9 @@ public class App extends Application
 				//AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.testvideo);
 				//mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
 				//afd.close();
-				//mMediaPlayer.setDataSource("http://www.bbc.co.uk/mediaselector/playlists/hls/tablet/ak/news_ch.m3u8");
+				mMediaPlayer.setDataSource("http://www.bbc.co.uk/mediaselector/playlists/hls/tablet/ak/news_ch.m3u8");
 				//mMediaPlayer.setDataSource("http://news.downloads.bbc.co.uk.edgesuite.net/mps_aac/public/news/today/1034000/1034200_aac_32k.mp4?at=DXRTlO8t96f9494c3ae5c0afe97142851cd6eb08f8c1ec1c4f7b7670fb0c0");
-				mMediaPlayer.setDataSource("http://news.downloads.bbc.co.uk.edgesuite.net/mps_h264_200/public/news/uk/1071000/1071199_h264_176k.mp4?at=FKVdo_K40ecabf918079ffe1b289151e0513d75b09f395be4f7b76df9b5c0");
+				//mMediaPlayer.setDataSource("http://news.downloads.bbc.co.uk.edgesuite.net/mps_h264_200/public/news/uk/1071000/1071199_h264_176k.mp4?at=FKVdo_K40ecabf918079ffe1b289151e0513d75b09f395be4f7b76df9b5c0");
 				mMediaPlayer.prepare();
 			}
 			catch(Exception e){
